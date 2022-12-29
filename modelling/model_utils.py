@@ -11,19 +11,33 @@ from modelling.models import Model, XGBoostModel
 from utils.utils import log
 
 
-def _splitData(
-    data: SparkDataFrame,
-    train_startDate: str,
-    train_endDate: str,
-    inference_startDate: str,
-    inference_endDate: str,
+def splitData(
+    data: SparkDataFrame, model_config: dict, features_config: dict
 ) -> tuple[SparkDataFrame, SparkDataFrame]:
 
-    train_data = data.where(F.col("date").between(train_startDate, train_endDate))
+    # parse parameters from the config file
+    train_startDate: str = model_config["train_startDate"]
+    train_endDate: str = model_config["train_endDate"]
+    inference_startDate: str = model_config["inference_startDate"]
+    inference_endDate: str = model_config["inference_endDate"]
+    hierarchy_columns: list = model_config["hierarchy_columns"]
+    target: str = model_config["target"]
+
+    features = featureConstructor(features_config)
+    categorical_features = [
+        f.output_column for f in features if f.output_type == "categorical"
+    ]
+    numerical_features = [
+        f.output_column for f in features if f.output_type == "numeric"
+    ]
+
+    train_data = data.where(
+        F.col("date").between(train_startDate, train_endDate)
+    ).select(*hierarchy_columns + categorical_features + numerical_features, target)
 
     inference_data = data.where(
         F.col("date").between(inference_startDate, inference_endDate)
-    )
+    ).select(*hierarchy_columns + categorical_features + numerical_features, target)
 
     return train_data, inference_data
 
@@ -71,24 +85,14 @@ def _data_frame_to_scipy_sparse_matrix(df, numerical_columns):
     return arr.tocsr()
 
 
-def prepare_data(
-    data: SparkDataFrame,
+def _prepare_data(
+    pd_data: PandasDataframe,
     hierarchy_columns: list,
     categorical_features: list,
     numerical_features: list,
     target: str,
     prefix: str,
 ):
-
-    modelling_data = data.select(
-        *hierarchy_columns + categorical_features + numerical_features, target
-    )
-
-    log(f"Saving the {prefix} SPARK dataframe")
-    modelling_data.write.parquet(f"data/{prefix}_modelling_data.parquet", "overwrite")
-
-    log(f"Reading the {prefix} dataframe using Pandas")
-    pd_data = pd.read_parquet(f"data/{prefix}_modelling_data.parquet", "pyarrow")
 
     log(f"One-hot encoding the {prefix} dataframe")
     X_ohe = _OneHotEncode(
@@ -99,7 +103,7 @@ def prepare_data(
     X_train_ohe_sparse = _data_frame_to_scipy_sparse_matrix(X_ohe, numerical_features)
     y = pd_data[target].values
 
-    return X_train_ohe_sparse, y, pd_data
+    return X_train_ohe_sparse, y
 
 
 def loadModel(model_name: str, model_params: dict) -> Model:
@@ -111,7 +115,10 @@ def loadModel(model_name: str, model_params: dict) -> Model:
 
 
 def train_model(
-    data: SparkDataFrame, model_config: dict, features_config: dict
+    train_data: PandasDataframe,
+    test_data: PandasDataframe,
+    model_config: dict,
+    features_config: dict,
 ) -> PandasDataframe:
     """
     A function that takes a spark data frame, prepare it for modeling, fits and trains the model.
@@ -124,11 +131,6 @@ def train_model(
     hierarchy_columns: list = model_config["hierarchy_columns"]
     target: str = model_config["target"]
 
-    train_startDate: str = model_config["train_startDate"]
-    train_endDate: str = model_config["train_endDate"]
-    inference_startDate: str = model_config["inference_startDate"]
-    inference_endDate: str = model_config["inference_endDate"]
-
     features = featureConstructor(features_config)
     categorical_features = [
         f.output_column for f in features if f.output_type == "categorical"
@@ -136,16 +138,9 @@ def train_model(
     numerical_features = [
         f.output_column for f in features if f.output_type == "numeric"
     ]
-    train_data, inference_data = _splitData(
-        data=data,
-        train_startDate=train_startDate,
-        train_endDate=train_endDate,
-        inference_startDate=inference_startDate,
-        inference_endDate=inference_endDate,
-    )
 
     # Preparing the training data
-    X_train_ohe_sparse, y_train, _ = prepare_data(
+    X_train_ohe_sparse, y_train = _prepare_data(
         train_data,
         hierarchy_columns,
         categorical_features,
@@ -161,8 +156,8 @@ def train_model(
     model.fit(X_train=X_train_ohe_sparse, y_train=y_train)
 
     # preparing inferencing data
-    X_test_ohe_sparse, y_test, X_test_pandas = prepare_data(
-        inference_data,
+    X_test_ohe_sparse, y_test = _prepare_data(
+        test_data,
         hierarchy_columns,
         categorical_features,
         numerical_features,
@@ -175,6 +170,6 @@ def train_model(
     mean_squared_error_ = mean_squared_error(y_test, y_pred)
     log(f"{mean_squared_error_ =}")
 
-    X_test_pandas["forecast"] = y_pred.tolist()
+    test_data["forecast"] = y_pred.tolist()
 
-    return X_test_pandas
+    return test_data
