@@ -1,0 +1,10 @@
+{
+    "name": "Dockerfile",
+    "context": "../",
+    "dockerFile": "../Dockerfile",
+    "extensions": ["ms-python.python", "ms-toolsai.jupyter"],
+    "settings": {
+        "terminal.integrated.shell.linux": null
+    },
+    "forwardPorts": [4050]
+}

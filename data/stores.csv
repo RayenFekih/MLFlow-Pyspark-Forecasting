@@ -1,0 +1,202 @@
+store_id,store_label,store_address,store_size,store_region,country
+0,store_0,17 Marina Drive  Savannah GA,2,1,US
+1,store_1,2200 East Victory Drive #36 Savannah GA,3,2,US
+2,store_2,740 East 34th Street  Savannah GA,3,3,US
+3,store_3,713 East 32nd Street  Savannah GA,2,1,US
+4,store_4,2 Misty Marsh Drive  Savannah GA,3,4,US
+5,store_5,614 East Duffy Lane A Savannah GA,3,1,US
+6,store_6,702 East 53rd Street  Savannah GA,3,1,US
+7,store_7,1350 Exley Street #304 Savannah GA,2,3,US
+8,store_8,103 Fenwick Village Drive  Savannah GA,2,1,US
+9,store_9,1425 Claremont Circle  Savannah GA,1,1,US
+10,store_10,37 East Broad Street  Savannah GA,3,1,US
+11,store_11,2209 Florida Avenue  Savannah GA,3,1,US
+12,store_12,127 Andover Drive  Savannah GA,1,2,US
+13,store_13,10612 Middleground Road #312 Savannah GA,3,4,US
+14,store_14,217 West Congress Street  Savannah GA,2,2,US
+15,store_15,1938 Arcadian Street  Savannah GA,3,3,US
+16,store_16,1425 Claremont Circle  Savannah GA,3,4,US
+17,store_17,614 East Duffy Lane A Savannah GA,2,2,US
+18,store_18,21 Longview Bluff Drive East  Savannah GA,3,1,US
+19,store_19,8505 Waters Avenue #66 Savannah GA,3,3,US
+20,store_20,425 Buckhalter Road  Savannah GA,3,1,US
+21,store_21,27 Leary Drive  Savannah GA,3,1,US
+22,store_22,36 Saint Ives Drive  Savannah GA,1,1,US
+23,store_23,10996 Largo Drive  Savannah GA,1,1,US
+24,store_24,63 Wild Thistle Lane  Savannah GA,2,2,US
+25,store_25,5108 Franklin Street  Savannah GA,3,4,US
+26,store_26,2305 Ranchland Drive  Savannah GA,3,3,US
+27,store_27,345 Tattnall Street  Savannah GA,3,3,US
+28,store_28,27 Cabbage Crossing  Savannah GA,2,1,US
+29,store_29,88 Pine Valley Road  Savannah GA,2,1,US
+30,store_30,109 East 64th Street  Savannah GA,3,2,US
+31,store_31,5118 Augusta Road  Garden City GA,3,2,US
+32,store_32,63 Wild Thistle Lane  Savannah GA,2,1,US
+33,store_33,43 Henderson Avenue  Savannah GA,3,1,US
+34,store_34,5123 Ewell Street  Savannah GA,2,2,US
+35,store_35,702 East 53rd Street  Savannah GA,3,2,US
+36,store_36,125 Heritage Way  Savannah GA,3,1,US
+37,store_37,2212 Daffin Drive  Savannah GA,3,4,US
+38,store_38,1915 Dean Forest Road  Pooler GA,3,1,US
+39,store_39,112 Mallard Drive  Savannah GA,3,1,US
+40,store_40,12 Red Fox Drive  Savannah GA,1,1,US
+41,store_41,174 Village Lake Drive  Pooler GA,3,1,US
+42,store_42,1403 Lincoln Street  Savannah GA,2,2,US
+43,store_43,1405 East 55th Street  Savannah GA,3,4,US
+44,store_44,115 Falkirk Street  Savannah GA,3,1,US
+45,store_45,127 Andover Drive  Savannah GA,3,3,US
+46,store_46,302 Tuten Avenue  Savannah GA,3,1,US
+47,store_47,208 Towne Lake Way  Pooler GA,2,2,US
+48,store_48,109 Peter's Quay  Savannah GA,2,3,US
+49,store_49,60 Willow Lakes Drive  Savannah GA,3,1,US
+50,store_50,4423 Lilac Avenue  Savannah GA,2,4,US
+51,store_51,10 Dalry Lane  Savannah GA,3,3,US
+52,store_52,19 Katama Way  Pooler GA,3,3,US
+53,store_53,595 West 54th Street #4 Savannah GA,3,3,US
+54,store_54,23 Cove Drive  Savannah GA,3,1,US
+55,store_55,7 River Otter Lane  Savannah GA,2,3,US
+56,store_56,27 Cabbage Crossing  Savannah GA,3,2,US
+57,store_57,618 McLaws Street  Savannah GA,3,2,US
+58,store_58,1938 Arcadian Street  Savannah GA,3,3,US
+59,store_59,1431 King George Boulevard #21-C Savannah GA,3,3,US
+60,store_60,60 Willow Lakes Drive  Savannah GA,1,2,US
+61,store_61,1915 Dean Forest Road  Pooler GA,3,2,US
+62,store_62,171 Brickhill Circle  Pooler GA,3,2,US
+63,store_63,1800 East 63rd Street  Savannah GA,2,1,US
+64,store_64,105 French Run Road  Savannah GA,1,1,US
+65,store_65,2209 Florida Avenue  Savannah GA,2,1,US
+66,store_66,3 Hawser Way  Port Wentworth GA,3,3,US
+67,store_67,150 Somersby Boulevard  Pooler GA,3,4,US
+68,store_68,408 Pine Street  Bloomingdale GA,2,3,US
+69,store_69,1431 King George Boulevard #21-C Savannah GA,2,2,US
+70,store_70,302 Tuten Avenue  Savannah GA,3,1,US
+71,store_71,2803 River Drive  Thunderbolt GA,3,1,US
+72,store_72,1405 East 55th Street  Savannah GA,2,2,US
+73,store_73,5108 Franklin Street  Savannah GA,3,3,US
+74,store_74,205 North Henderson Bend Road Northwest  Calhoun GA,3,1,US
+75,store_75,2604 13th Street  Savannah GA,3,3,US
+76,store_76,121 Mills Run Drive  Savannah GA,1,1,US
+77,store_77,1809 U.S. 80  Savannah GA,2,4,US
+78,store_78,2604 13th Street  Savannah GA,1,1,US
+79,store_79,2 Cockle Shell Road  Savannah GA,3,1,US
+80,store_80,1109 East 35th Street  Savannah GA,3,1,US
+81,store_81,95 Westbourne Way  Pooler GA,2,1,US
+82,store_82,121 Mills Run Drive  Savannah GA,1,4,US
+83,store_83,2817 3rd Street  Thunderbolt GA,3,3,US
+84,store_84,5 Winslow Circle  Pooler GA,2,1,US
+85,store_85,13213 Spanish Moss Road  Savannah GA,3,4,US
+86,store_86,6206 Waters Avenue #110 Savannah GA,3,1,US
+87,store_87,595 West 54th Street #4 Savannah GA,2,4,US
+88,store_88,2604 13th Street  Savannah GA,3,3,US
+89,store_89,2803 River Drive  Thunderbolt GA,3,3,US
+90,store_90,113 Dove Lane  Savannah GA,3,1,US
+91,store_91,10 Dalry Lane  Savannah GA,3,4,US
+92,store_92,95 Westbourne Way  Pooler GA,3,2,US
+93,store_93,60 Willow Lakes Drive  Savannah GA,3,2,US
+94,store_94,1915 Dean Forest Road  Pooler GA,3,3,US
+95,store_95,45 Heathcote Circle  Savannah GA,3,3,US
+96,store_96,109 East 64th Street  Savannah GA,3,2,US
+97,store_97,205 North Henderson Bend Road Northwest  Calhoun GA,3,1,US
+98,store_98,125 Heritage Way  Savannah GA,3,3,US
+99,store_99,595 West 54th Street #4 Savannah GA,1,1,US
+store_id,store_label,store_address,store_size,store_region,country
+0,store_0,17 Marina Drive  Savannah GA,2,1,US
+1,store_1,2200 East Victory Drive #36 Savannah GA,3,2,US
+2,store_2,740 East 34th Street  Savannah GA,3,3,US
+3,store_3,713 East 32nd Street  Savannah GA,2,1,US
+4,store_4,2 Misty Marsh Drive  Savannah GA,3,4,US
+5,store_5,614 East Duffy Lane A Savannah GA,3,1,US
+6,store_6,702 East 53rd Street  Savannah GA,3,1,US
+7,store_7,1350 Exley Street #304 Savannah GA,2,3,US
+8,store_8,103 Fenwick Village Drive  Savannah GA,2,1,US
+9,store_9,1425 Claremont Circle  Savannah GA,1,1,US
+10,store_10,37 East Broad Street  Savannah GA,3,1,US
+11,store_11,2209 Florida Avenue  Savannah GA,3,1,US
+12,store_12,127 Andover Drive  Savannah GA,1,2,US
+13,store_13,10612 Middleground Road #312 Savannah GA,3,4,US
+14,store_14,217 West Congress Street  Savannah GA,2,2,US
+15,store_15,1938 Arcadian Street  Savannah GA,3,3,US
+16,store_16,1425 Claremont Circle  Savannah GA,3,4,US
+17,store_17,614 East Duffy Lane A Savannah GA,2,2,US
+18,store_18,21 Longview Bluff Drive East  Savannah GA,3,1,US
+19,store_19,8505 Waters Avenue #66 Savannah GA,3,3,US
+20,store_20,425 Buckhalter Road  Savannah GA,3,1,US
+21,store_21,27 Leary Drive  Savannah GA,3,1,US
+22,store_22,36 Saint Ives Drive  Savannah GA,1,1,US
+23,store_23,10996 Largo Drive  Savannah GA,1,1,US
+24,store_24,63 Wild Thistle Lane  Savannah GA,2,2,US
+25,store_25,5108 Franklin Street  Savannah GA,3,4,US
+26,store_26,2305 Ranchland Drive  Savannah GA,3,3,US
+27,store_27,345 Tattnall Street  Savannah GA,3,3,US
+28,store_28,27 Cabbage Crossing  Savannah GA,2,1,US
+29,store_29,88 Pine Valley Road  Savannah GA,2,1,US
+30,store_30,109 East 64th Street  Savannah GA,3,2,US
+31,store_31,5118 Augusta Road  Garden City GA,3,2,US
+32,store_32,63 Wild Thistle Lane  Savannah GA,2,1,US
+33,store_33,43 Henderson Avenue  Savannah GA,3,1,US
+34,store_34,5123 Ewell Street  Savannah GA,2,2,US
+35,store_35,702 East 53rd Street  Savannah GA,3,2,US
+36,store_36,125 Heritage Way  Savannah GA,3,1,US
+37,store_37,2212 Daffin Drive  Savannah GA,3,4,US
+38,store_38,1915 Dean Forest Road  Pooler GA,3,1,US
+39,store_39,112 Mallard Drive  Savannah GA,3,1,US
+40,store_40,12 Red Fox Drive  Savannah GA,1,1,US
+41,store_41,174 Village Lake Drive  Pooler GA,3,1,US
+42,store_42,1403 Lincoln Street  Savannah GA,2,2,US
+43,store_43,1405 East 55th Street  Savannah GA,3,4,US
+44,store_44,115 Falkirk Street  Savannah GA,3,1,US
+45,store_45,127 Andover Drive  Savannah GA,3,3,US
+46,store_46,302 Tuten Avenue  Savannah GA,3,1,US
+47,store_47,208 Towne Lake Way  Pooler GA,2,2,US
+48,store_48,109 Peter's Quay  Savannah GA,2,3,US
+49,store_49,60 Willow Lakes Drive  Savannah GA,3,1,US
+50,store_50,4423 Lilac Avenue  Savannah GA,2,4,US
+51,store_51,10 Dalry Lane  Savannah GA,3,3,US
+52,store_52,19 Katama Way  Pooler GA,3,3,US
+53,store_53,595 West 54th Street #4 Savannah GA,3,3,US
+54,store_54,23 Cove Drive  Savannah GA,3,1,US
+55,store_55,7 River Otter Lane  Savannah GA,2,3,US
+56,store_56,27 Cabbage Crossing  Savannah GA,3,2,US
+57,store_57,618 McLaws Street  Savannah GA,3,2,US
+58,store_58,1938 Arcadian Street  Savannah GA,3,3,US
+59,store_59,1431 King George Boulevard #21-C Savannah GA,3,3,US
+60,store_60,60 Willow Lakes Drive  Savannah GA,1,2,US
+61,store_61,1915 Dean Forest Road  Pooler GA,3,2,US
+62,store_62,171 Brickhill Circle  Pooler GA,3,2,US
+63,store_63,1800 East 63rd Street  Savannah GA,2,1,US
+64,store_64,105 French Run Road  Savannah GA,1,1,US
+65,store_65,2209 Florida Avenue  Savannah GA,2,1,US
+66,store_66,3 Hawser Way  Port Wentworth GA,3,3,US
+67,store_67,150 Somersby Boulevard  Pooler GA,3,4,US
+68,store_68,408 Pine Street  Bloomingdale GA,2,3,US
+69,store_69,1431 King George Boulevard #21-C Savannah GA,2,2,US
+70,store_70,302 Tuten Avenue  Savannah GA,3,1,US
+71,store_71,2803 River Drive  Thunderbolt GA,3,1,US
+72,store_72,1405 East 55th Street  Savannah GA,2,2,US
+73,store_73,5108 Franklin Street  Savannah GA,3,3,US
+74,store_74,205 North Henderson Bend Road Northwest  Calhoun GA,3,1,US
+75,store_75,2604 13th Street  Savannah GA,3,3,US
+76,store_76,121 Mills Run Drive  Savannah GA,1,1,US
+77,store_77,1809 U.S. 80  Savannah GA,2,4,US
+78,store_78,2604 13th Street  Savannah GA,1,1,US
+79,store_79,2 Cockle Shell Road  Savannah GA,3,1,US
+80,store_80,1109 East 35th Street  Savannah GA,3,1,US
+81,store_81,95 Westbourne Way  Pooler GA,2,1,US
+82,store_82,121 Mills Run Drive  Savannah GA,1,4,US
+83,store_83,2817 3rd Street  Thunderbolt GA,3,3,US
+84,store_84,5 Winslow Circle  Pooler GA,2,1,US
+85,store_85,13213 Spanish Moss Road  Savannah GA,3,4,US
+86,store_86,6206 Waters Avenue #110 Savannah GA,3,1,US
+87,store_87,595 West 54th Street #4 Savannah GA,2,4,US
+88,store_88,2604 13th Street  Savannah GA,3,3,US
+89,store_89,2803 River Drive  Thunderbolt GA,3,3,US
+90,store_90,113 Dove Lane  Savannah GA,3,1,US
+91,store_91,10 Dalry Lane  Savannah GA,3,4,US
+92,store_92,95 Westbourne Way  Pooler GA,3,2,US
+93,store_93,60 Willow Lakes Drive  Savannah GA,3,2,US
+94,store_94,1915 Dean Forest Road  Pooler GA,3,3,US
+95,store_95,45 Heathcote Circle  Savannah GA,3,3,US
+96,store_96,109 East 64th Street  Savannah GA,3,2,US
+97,store_97,205 North Henderson Bend Road Northwest  Calhoun GA,3,1,US
+98,store_98,125 Heritage Way  Savannah GA,3,3,US
+99,store_99,595 West 54th Street #4 Savannah GA,1,1,US
