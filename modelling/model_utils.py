@@ -10,6 +10,17 @@ from feature_engineering.engineering import featureConstructor
 from modelling.models import Model, XGBoostModel
 from utils.utils import log
 
+import mlflow
+from mlflow import sklearn, xgboost
+
+
+def loadModel(model_name: str, model_params: dict) -> Model:
+    match model_name:
+        case "xgboost":
+            return XGBoostModel(model_params)
+        case _:
+            raise ValueError(f"{model_name} model in undefined")
+
 
 def splitData(
     data: SparkDataFrame, model_config: dict, features_config: dict
@@ -85,49 +96,13 @@ def _data_frame_to_scipy_sparse_matrix(df, numerical_columns):
     return arr.tocsr()
 
 
-def _prepare_data(
+def prepare_data(
     pd_data: PandasDataframe,
-    hierarchy_columns: list,
-    categorical_features: list,
-    numerical_features: list,
-    target: str,
+    model_config: str,
+    features_config: str,
     prefix: str,
 ):
 
-    log(f"One-hot encoding the {prefix} dataframe")
-    X_ohe = _OneHotEncode(
-        pd_data, hierarchy_columns + categorical_features, numerical_features
-    )
-
-    log(f"Transforming the {prefix} one-hot encoded data into a CSR matrix")
-    X_train_ohe_sparse = _data_frame_to_scipy_sparse_matrix(X_ohe, numerical_features)
-    y = pd_data[target].values
-
-    return X_train_ohe_sparse, y
-
-
-def loadModel(model_name: str, model_params: dict) -> Model:
-    match model_name:
-        case "xgboost":
-            return XGBoostModel(model_params)
-        case _:
-            raise ValueError(f"{model_name} model in undefined")
-
-
-def train_model(
-    train_data: PandasDataframe,
-    test_data: PandasDataframe,
-    model_config: dict,
-    features_config: dict,
-) -> PandasDataframe:
-    """
-    A function that takes a spark data frame, prepare it for modeling, fits and trains the model.
-    This function returns the a prediction dataset.
-    """
-
-    # Parse parameters from the config file
-    model_name: str = model_config["model"]
-    model_params: dict = model_config.get("params", dict())
     hierarchy_columns: list = model_config["hierarchy_columns"]
     target: str = model_config["target"]
 
@@ -139,37 +114,93 @@ def train_model(
         f.output_column for f in features if f.output_type == "numeric"
     ]
 
-    # Preparing the training data
-    X_train_ohe_sparse, y_train = _prepare_data(
-        train_data,
-        hierarchy_columns,
-        categorical_features,
-        numerical_features,
-        target,
-        prefix="train",
+    log(f"One-hot encoding the {prefix} dataframe")
+    X_ohe = _OneHotEncode(
+        pd_data, hierarchy_columns + categorical_features, numerical_features
     )
 
+    log(f"Transforming the {prefix} one-hot encoded data into a CSR matrix")
+    X_ohe_sparse = _data_frame_to_scipy_sparse_matrix(X_ohe, numerical_features)
+    y = pd_data[target].values
+
+    return X_ohe_sparse, y
+
+
+def train_model(
+    X_train_ohe_sparse,
+    X_test_ohe_sparse,
+    y_train,
+    y_test,
+    model_config: dict,
+) -> list:
+
+    """
+    A function that takes a spark data frame, prepare it for modeling, fits and trains the model.
+    This function returns the a prediction dataset.
+    """
+
+    # Parse parameters from the config file
+    model_name: str = model_config["model"]
+    model_params: dict = model_config.get("params", dict())
+
     # Loading the model
+    log(f"Loading the {model_name} model")
     model = loadModel(model_name, model_params)
 
     # Fitting the model
+    log(f"Fitting the {model_name} model")
     model.fit(X_train=X_train_ohe_sparse, y_train=y_train)
 
-    # preparing inferencing data
-    X_test_ohe_sparse, y_test = _prepare_data(
-        test_data,
-        hierarchy_columns,
-        categorical_features,
-        numerical_features,
-        target,
-        prefix="test",
-    )
-
     # Inferencing
+    log("Generating predictions")
     y_pred = model.predict(X_test_ohe_sparse)
     mean_squared_error_ = mean_squared_error(y_test, y_pred)
     log(f"{mean_squared_error_ =}")
 
-    test_data["forecast"] = y_pred.tolist()
+    return y_pred
 
-    return test_data
+
+def MLFlow_train_model(
+    X_train_ohe_sparse,
+    X_test_ohe_sparse,
+    y_train,
+    y_test,
+    model_config: dict,
+    model_params: dict,
+) -> list:
+
+    """
+    A function that takes a spark data frame, prepare it for modeling, fits and trains the model.
+    This function returns the a prediction dataset.
+    """
+    with mlflow.start_run():
+        # Parse parameters from the config file
+        model_name: str = model_config["model"]
+        # model_params: dict = model_config.get("params", dict())
+
+        # Enable MLFlow tracking
+        mlflow.xgboost.autolog()
+        run_id = mlflow.last_active_run().info.run_id
+        log(f"Logged data and model in run {run_id}")
+
+        # Loading the model
+        log(f"[Run {run_id}]: Loading the {model_name} model")
+        model = loadModel(model_name, model_params)
+
+        # Fitting the model
+        log(f"[Run {run_id}]: Fitting the {model_name} model")
+        model.fit(X_train=X_train_ohe_sparse, y_train=y_train)
+
+        # Inferencing
+        log(f"[Run {run_id}]: Generating predictions")
+        y_pred = model.predict(X_test_ohe_sparse)
+
+        # Evaluation
+        mean_squared_error_ = mean_squared_error(y_test, y_pred)
+        log(f"[Run {run_id}]: {mean_squared_error_=}")
+        mlflow.log_metric("mse", mean_squared_error_)
+
+        # Saving the model as an artifact.
+        sklearn.log_model(model, "model")
+
+        return y_pred
