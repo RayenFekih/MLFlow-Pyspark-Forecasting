@@ -1,10 +1,20 @@
 from abc import ABC, abstractmethod
 
 import xgboost as xgb
+import mlflow
+from mlflow import sklearn
 
 
 class Model(ABC):
     """Model abstract class"""
+
+    @abstractmethod
+    def mlflow_logs(self):
+        pass
+
+    @abstractmethod
+    def mlflow_log_model(self):
+        pass
 
     @abstractmethod
     def fit(self):
@@ -17,26 +27,18 @@ class Model(ABC):
 
 class XGBoostModel(Model):
     def __init__(self, params: dict = {}) -> None:
-        self._params = params
-        self._model = xgb.XGBRegressor(**params)
+        self.params = params
+        self.model = xgb.XGBRegressor(**params)
 
     @classmethod
     def new_instance(cls, params={}):
         return cls(params)
 
-    @property
-    def model(self):
-        """
-        Getter for the model
-        """
-        return self._model
+    def mlflow_logs(self):
+        mlflow.xgboost.autolog()
 
-    @property
-    def params(self):
-        """
-        Getter for model parameters
-        """
-        return self._params
+    def mlflow_log_model(self):
+        sklearn.log_model(self, "model")
 
     def fit(self, X_train, y_train):
         return self.model.fit(X_train, y_train)

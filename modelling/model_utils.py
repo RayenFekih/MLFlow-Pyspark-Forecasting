@@ -11,7 +11,6 @@ from modelling.models import Model, XGBoostModel
 from utils.utils import log
 
 import mlflow
-from mlflow import sklearn, xgboost
 
 
 def loadModel(model_name: str, model_params: dict) -> Model:
@@ -176,16 +175,16 @@ def MLFlow_train_model(
     with mlflow.start_run():
         # Parse parameters from the config file
         model_name: str = model_config["model"]
-        # model_params: dict = model_config.get("params", dict())
 
-        # Enable MLFlow tracking
-        mlflow.xgboost.autolog()
         run_id = mlflow.last_active_run().info.run_id
         log(f"Logged data and model in run {run_id}")
 
         # Loading the model
         log(f"[Run {run_id}]: Loading the {model_name} model")
         model = loadModel(model_name, model_params)
+
+        # Enable MLFlow logs tracking
+        model.mlflow_logs
 
         # Fitting the model
         log(f"[Run {run_id}]: Fitting the {model_name} model")
@@ -201,6 +200,6 @@ def MLFlow_train_model(
         mlflow.log_metric("mse", mean_squared_error_)
 
         # Saving the model as an artifact.
-        sklearn.log_model(model, "model")
+        model.mlflow_log_model()
 
         return y_pred
