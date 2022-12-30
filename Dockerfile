@@ -16,5 +16,6 @@ RUN pip --no-cache-dir install pyspark==${PYSPARK_VERSION}
 RUN pip --no-cache-dir install pandas
 RUN pip --no-cache-dir install scipy
 RUN pip --no-cache-dir install ipykernel
+RUN pip --no-cache-dir install mlflow
 
 ENTRYPOINT ["bash"]
