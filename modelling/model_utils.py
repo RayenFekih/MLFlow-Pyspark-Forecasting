@@ -7,16 +7,32 @@ from scipy.sparse import lil_matrix
 from sklearn.metrics import mean_squared_error
 
 from feature_engineering.engineering import featureConstructor
-from modelling.models import Model, XGBoostModel
+from modelling.models import Model, XGBoostModel, LgbmModel
 from utils.utils import log
 
 import mlflow
 
 
-def loadModel(model_name: str, model_params: dict) -> Model:
+def loadModel(model_name: str, model_params: dict, run_id: str = None) -> Model:
+    """
+    This function loads the specified model in the config file
+    If run_id is specified, a pretrained model (saved through the mlflow run) would be loaded
+    """
     match model_name:
         case "xgboost":
-            return XGBoostModel(model_params)
+            if run_id:
+                return mlflow.pyfunc.load_model(
+                    f"runs:/{run_id}/model"
+                )  # To be changed in case of adding other mlflow flavors
+            else:
+                return XGBoostModel(model_params)
+        case "lgbm":
+            if run_id:
+                return mlflow.pyfunc.load_model(
+                    f"runs:/{run_id}/model"
+                )
+            else:
+                return LgbmModel(model_params)
         case _:
             raise ValueError(f"{model_name} model in undefined")
 
@@ -24,6 +40,10 @@ def loadModel(model_name: str, model_params: dict) -> Model:
 def splitData(
     data: SparkDataFrame, model_config: dict, features_config: dict
 ) -> tuple[SparkDataFrame, SparkDataFrame]:
+
+    """
+    This Function splits the spark dataframe into train and inference data then selects the needed columns for modelling
+    """
 
     # parse parameters from the config file
     train_startDate: str = model_config["train_startDate"]
@@ -57,6 +77,7 @@ def _OneHotEncode(
 ):
     """
     Perform one hot encoding for categorical variables
+    Null values won't be encoded
     """
     df_list = []
     for col_name in categorical_columns:
@@ -101,7 +122,10 @@ def prepare_data(
     features_config: str,
     prefix: str,
 ):
-
+    """
+    This function takes a Pandas dataframe, one hot-encode it and transforms it into a CSR matrix.
+    It returns the CSR matrix and the target column
+    """
     hierarchy_columns: list = model_config["hierarchy_columns"]
     target: str = model_config["target"]
 
@@ -131,11 +155,12 @@ def train_model(
     y_train,
     y_test,
     model_config: dict,
+    run_id: str = None,
 ) -> list:
 
     """
-    A function that takes a spark data frame, prepare it for modeling, fits and trains the model.
-    This function returns the a prediction dataset.
+    This function loads the model, train it using the CSR matrix then returns the prediction array.
+    If a run_id was specified, a pretrained model (throught the MLFlow run) would be loaded.
     """
 
     # Parse parameters from the config file
@@ -143,12 +168,15 @@ def train_model(
     model_params: dict = model_config.get("params", dict())
 
     # Loading the model
-    log(f"Loading the {model_name} model")
-    model = loadModel(model_name, model_params)
+    if run_id:
+        log(f"Loading the pretrained {model_name} model in run {run_id}")
+        model = loadModel(model_name, model_params, run_id=run_id)
+    else:
+        log(f"Loading the {model_name} model")
+        model = loadModel(model_name, model_params)
 
-    # Fitting the model
-    log(f"Fitting the {model_name} model")
-    model.fit(X_train=X_train_ohe_sparse, y_train=y_train)
+        log(f"Fitting the {model_name} model")
+        model.fit(X_train=X_train_ohe_sparse, y_train=y_train)
 
     # Inferencing
     log("Generating predictions")
@@ -169,7 +197,7 @@ def MLFlow_train_model(
 ) -> list:
 
     """
-    A function that takes a spark data frame, prepare it for modeling, fits and trains the model.
+    A function that takes a Pandas dataframe, prepare it for modeling, fits and trains the model.
     This function returns the a prediction dataset.
     """
     with mlflow.start_run():
